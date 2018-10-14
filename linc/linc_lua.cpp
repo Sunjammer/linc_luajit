@@ -1,6 +1,4 @@
-#ifndef HXCPP_H
-  #include <hxcpp.h>
-#endif
+#include <hxcpp.h>
 
 #include "./linc_lua.h"
 #include "../lib/Lua/src/lua.hpp"
