@@ -19,10 +19,17 @@ namespace linc {
     namespace helpers {
 
         extern int luaDumpWriter(lua_State *L, const void* buffer, size_t size, void* data);
+        extern const char* luaLoadReader(lua_State *L, void* data, size_t *size);
         extern int setErrorHandler(lua_State *L);
         extern void register_hxtrace_func(HxTraceFN fn);
         extern void register_hxtrace_lib(lua_State* L);
         extern ::Array<unsigned char> to_haxe_bytes(unsigned char* bytes, int length);
+
+        struct BytesBox{
+            public:
+                ::Array_obj<unsigned char>* bytes;
+                int offset;
+        };
 
     }
 
@@ -37,6 +44,7 @@ namespace linc {
         extern int getstack(lua_State *L, int level, Dynamic ar);
         extern int getinfo(lua_State *L, const char *what, Dynamic ar);
         extern void dump(lua_State *l, Array<unsigned char> outbytes);
+        extern int load(lua_State *l, Array<unsigned char> inbytes, ::String name);
 
     } // lua
 

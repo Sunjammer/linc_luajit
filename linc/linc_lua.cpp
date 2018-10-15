@@ -107,8 +107,14 @@ namespace linc {
         }
 
         void dump(lua_State *l, Array<unsigned char> outBytes){
-            printf("lua_dump vs %i\n", outBytes);
             lua_dump(l, helpers::luaDumpWriter, outBytes.GetPtr());
+        }
+
+        int load(lua_State *l, Array<unsigned char> inbytes, ::String name){
+            helpers::BytesBox* b = new helpers::BytesBox();
+            b->bytes = inbytes.GetPtr();
+            b->offset = 0;
+            return lua_load(l, helpers::luaLoadReader, b, name.c_str());
         }
 
     } //lua
@@ -173,6 +179,17 @@ namespace linc {
             Array<unsigned char> outBytes = (Array_obj<unsigned char>*) data;
             outBytes->blit(outBytes->length, newBytes, 0, newBytes->length);
             return 0;
+        }
+
+        static const char* luaLoadReader(lua_State *L, void* data, size_t *size){
+            BytesBox* box = (BytesBox*)data;
+            if(box->offset == box->bytes->length){
+                delete(box);
+                return 0;
+            }
+            *size = box->bytes->length;   
+            box->offset = box->bytes->length;
+            return box->bytes->GetBase();
         }
 
         static int onError(lua_State *L) {
