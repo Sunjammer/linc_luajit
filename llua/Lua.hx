@@ -35,6 +35,7 @@ extern class Lua {
 	public static inline var LUA_ERRSYNTAX:Int   = 3;
 	public static inline var LUA_ERRMEM:Int      = 4;
 	public static inline var LUA_ERRERR:Int      = 5;
+	public static inline var LUA_ERRFILE:Int     = 6;
 
 	
 	/* basic types */
