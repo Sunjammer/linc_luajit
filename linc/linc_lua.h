@@ -16,6 +16,16 @@ namespace linc {
     // typedef ::cpp::Function < int(::cpp::Pointer<lua_State>, ::String) > luaCallbackFN;
     typedef ::cpp::Function < int(String) > HxTraceFN;
 
+    namespace helpers {
+
+        extern int luaDumpWriter(lua_State *L, const void* buffer, size_t size, void* data);
+        extern int setErrorHandler(lua_State *L);
+        extern void register_hxtrace_func(HxTraceFN fn);
+        extern void register_hxtrace_lib(lua_State* L);
+        extern ::Array<unsigned char> to_haxe_bytes(unsigned char* bytes, int length);
+
+    }
+
     namespace lua {
 
         extern ::String version();
@@ -26,6 +36,7 @@ namespace linc {
 
         extern int getstack(lua_State *L, int level, Dynamic ar);
         extern int getinfo(lua_State *L, const char *what, Dynamic ar);
+        extern Array<unsigned char> dump(lua_State *l, Array<unsigned char> outbytes);
 
     } // lua
 
@@ -39,14 +50,6 @@ namespace linc {
         extern ::String checkstring(lua_State *L, int n);
         extern ::String optstring(lua_State *L, int n, const char *d);
         extern ::String ltypename(lua_State *L, int idx);
-
-    }
-
-    namespace helpers {
-
-        extern int setErrorHandler(lua_State *L);
-        extern void register_hxtrace_func(HxTraceFN fn);
-        extern void register_hxtrace_lib(lua_State* L);
 
     }
 
