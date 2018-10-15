@@ -286,7 +286,7 @@ extern class Lua {
 	// static function load(l:State, reader:lua_Reader, data:Void, chunkname:String) : Int;
 
 	@:native('linc::lua::dump')
-	static function dump(l:State, outBytes:haxe.io.BytesData) : haxe.io.BytesData;
+	static function dump(l:State, outBytes:haxe.io.BytesData) : Void;
 
 	/* coroutine functions */
 

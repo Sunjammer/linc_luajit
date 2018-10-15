@@ -106,9 +106,9 @@ namespace linc {
 
         }
 
-        Array<unsigned char> dump(lua_State *l, Array<unsigned char> outBytes){
-            lua_dump(l, helpers::luaDumpWriter, &outBytes);
-            return outBytes;
+        void dump(lua_State *l, Array<unsigned char> outBytes){
+            printf("lua_dump vs %i\n", outBytes);
+            lua_dump(l, helpers::luaDumpWriter, outBytes.GetPtr());
         }
 
     } //lua
@@ -168,8 +168,10 @@ namespace linc {
     namespace helpers {
 
         static int luaDumpWriter(lua_State *L, const void* buffer, size_t size, void* data){
-            Array<unsigned char> out = (Array_obj<unsigned char>*) data;
-            out.push(10);
+            Array<unsigned char> newBytes = new Array_obj<unsigned char>(size, size);
+            memcpy(newBytes->GetBase(), buffer, size);
+            Array<unsigned char> outBytes = (Array_obj<unsigned char>*) data;
+            outBytes->blit(outBytes->length, newBytes, 0, newBytes->length);
             return 0;
         }
 

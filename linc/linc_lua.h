@@ -36,7 +36,7 @@ namespace linc {
 
         extern int getstack(lua_State *L, int level, Dynamic ar);
         extern int getinfo(lua_State *L, const char *what, Dynamic ar);
-        extern Array<unsigned char> dump(lua_State *l, Array<unsigned char> outbytes);
+        extern void dump(lua_State *l, Array<unsigned char> outbytes);
 
     } // lua
 
